@@ -4,12 +4,12 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from notion_client import Client
 
 # Берём токены из environment variables
-BOT_TOKEN = os.getenv("bot-token")
-NOTION_TOKEN = os.getenv("notion-token")
-NOTION_DATABASE_ID = os.getenv("notion-database-id")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+INOCEAN_TOKEN = os.getenv("INOCEAN_TOKEN")
+INOCEAN_DATABASE_ID = os.getenv("INOCEAN_DATABASE_ID")
 
 # Инициализация Notion клиента
-notion = Client(auth=NOTION_TOKEN)
+notion = Client(auth=INOCEAN_TOKEN)
 
 # Команда /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -19,14 +19,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def add(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         notion.pages.create(
-            parent={"database_id": NOTION_DATABASE_ID},
+            parent={"database_id": INOCEAN_DATABASE_ID},
             properties={
                 "Name": {
-                    "title": [
-                        {
-                            "text": {"content": "Новая запись от бота"}
-                        }
-                    ]
+                    "title": [{"text": {"content": "Новая запись от бота"}}]
                 }
             }
         )
